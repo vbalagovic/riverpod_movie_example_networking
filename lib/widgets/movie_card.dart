@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_movie_example/models/movie.dart';
 import 'package:riverpod_movie_example/providers/movie_provider.dart';
 
@@ -33,7 +34,9 @@ class MovieCard extends ConsumerWidget {
                       child: Padding(
                           padding: const EdgeInsets.all(20),
                           child: Column(children: <Widget>[
-                            Text("${movie.title} (${movie.year})", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                            GestureDetector(
+                              onTap: () => context.push('/${movie.id}'),
+                              child: Text("${movie.title} (${movie.year})", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
                             const SizedBox(height: 10),
                             Text(movie.plot.toString(), overflow: TextOverflow.ellipsis, softWrap: false, maxLines: 3),
                             Spacer(),

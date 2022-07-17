@@ -22,6 +22,13 @@ class MovieService {
     return moviesData.data;
   }
 
+  Future<dynamic> fetchMovie(id) async {
+    // Load json data
+    final moviesData = await _dio.get('/movies/$id');
+    // Decode json data to list
+    return moviesData.data;
+  }
+
   Future<dynamic> updateMovie(id, movieData) async {
     // Load json data
     try {

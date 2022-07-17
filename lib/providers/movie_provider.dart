@@ -43,6 +43,14 @@ class MovieNotifier extends StateNotifier<MovieState> {
     state = state.copyWith(movies: movies, isLoading: false);
   }
 
+  Future<Movie> loadMovie(id) async {
+    final movieData = await MovieService().fetchMovie(id);
+    // Convert list to list of movies using the movie class constructor
+    final movie =  Movie.fromJson(movieData);
+    // Update state in provider
+    return movie;
+  }
+
   filterMovies(filter) async {
     state = state.copyWith(isLoading: true);
     final moviesList = await MovieService().fetchMovies(filter);
