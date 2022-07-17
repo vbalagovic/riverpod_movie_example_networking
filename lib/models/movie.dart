@@ -6,8 +6,9 @@ class Movie {
   String? poster;
   String? imdbRating;
   String? type;
+  String? id;
 
-  Movie({this.title, this.year, this.genre, this.plot, this.poster, this.imdbRating, this.type});
+  Movie({this.title, this.year, this.genre, this.plot, this.poster, this.imdbRating, this.type, this.id});
 
   Movie.fromJson(Map<String, dynamic> json) {
     title = json['Title'];
@@ -17,6 +18,7 @@ class Movie {
     poster = json['Poster'];
     imdbRating = json['imdbRating'];
     type = json['Type'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +30,7 @@ class Movie {
     data['Poster'] = this.poster;
     data['imdbRating'] = this.imdbRating;
     data['Type'] = this.type;
+    data['id'] = this.id;
     return data;
   }
 }

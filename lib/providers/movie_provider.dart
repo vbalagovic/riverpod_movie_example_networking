@@ -45,10 +45,35 @@ class MovieNotifier extends StateNotifier<MovieState> {
 
   filterMovies(filter) async {
     state = state.copyWith(isLoading: true);
-    final moviesList = await MovieService().fetchMovies();
+    final moviesList = await MovieService().fetchMovies(filter);
     // Convert list to list of movies using the movie class constructor with simple filter title function inside
-    final movies = moviesList.map((e) => Movie.fromJson(e)).toList().where((element) => element.title!.toLowerCase().contains(filter.toLowerCase())).toList();
+    final movies = moviesList.map((e) => Movie.fromJson(e)).toList();
 
+    state = state.copyWith(movies: movies, isLoading: false);
+  }
+
+  updateMovie(id, movieData) async {
+    //state = state.copyWith(isLoading: true);
+    final movieJson = await MovieService().updateMovie(id, movieData);
+    // Convert list to list of movies using the movie class constructor
+    final movie =  Movie.fromJson(movieJson);
+
+    final index = state.movies.indexWhere((element) => element.id == movie.id);
+    final movies = List<Movie>.from(state.movies);
+    movies[index] = movie;
+    // Update state in provider
+    state = state.copyWith(movies: movies, isLoading: false);
+  }
+
+  deleteMovie(id) async {
+    //state = state.copyWith(isLoading: true);
+    final movieJson = await MovieService().deleteMovie(id);
+    // Convert list to list of movies using the movie class constructor
+
+    final index = state.movies.indexWhere((element) => element.id == id);
+    final movies = List<Movie>.from(state.movies);
+    movies.removeAt(index);
+    // Update state in provider
     state = state.copyWith(movies: movies, isLoading: false);
   }
 }
